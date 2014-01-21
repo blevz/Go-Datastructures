@@ -1,10 +1,11 @@
 package ds
 
+//Data structure to represent a mathematical set
 type set struct {
 	data map[string]bool
 }
 
-func EmptySet() (r set) {
+func MakeEmptySet() (r set) {
 	r.data = make(map[string]bool)
 	return
 }
@@ -20,7 +21,7 @@ func (s *set) addElem(val string) {
 	}
 }
 
-func (s *set) delElem(val string) {
+func (s *set) DelElem(val string) {
 	if s.Exist(val) {
 		delete(s.data, val)
 	}
@@ -31,7 +32,7 @@ func (s set) Exist(val string) bool {
 	return present
 }
 
-func (s set) union(o set) (r set) {
+func (s set) Union(o set) (r set) {
 	r = EmptySet()
 	for v, _ := range s.data {
 		r.addElem(v)
@@ -42,7 +43,7 @@ func (s set) union(o set) (r set) {
 	return
 }
 
-func (s set) intersect(o set) (r set) {
+func (s set) Intersect(o set) (r set) {
 	r = EmptySet()
 	for v, _ := range s.data {
 		if o.Exist(v) {
@@ -52,7 +53,7 @@ func (s set) intersect(o set) (r set) {
 
 	return
 }
-func (s set) difference(o set) (r set) {
+func (s set) Difference(o set) (r set) {
 	r = EmptySet()
 	for v, _ := range s.data {
 		if !o.Exist(v) {
