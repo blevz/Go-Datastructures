@@ -5,16 +5,18 @@ type set struct {
 	data map[string]bool
 }
 
+//Public Fucntions
+
 func MakeEmptySet() (r set) {
 	r.data = make(map[string]bool)
 	return
 }
 
-func (s set) size() int {
+func (s set) Size() int {
 	return len(s.data)
 }
 
-func (s *set) addElem(val string) {
+func (s *set) AddElem(val string) {
 	_, present := s.data[val]
 	if !present {
 		s.data[val] = true
@@ -33,31 +35,32 @@ func (s set) Exist(val string) bool {
 }
 
 func (s set) Union(o set) (r set) {
-	r = EmptySet()
+	r = MakeEmptySet()
 	for v, _ := range s.data {
-		r.addElem(v)
+		r.AddElem(v)
 	}
 	for v, _ := range o.data {
-		r.addElem(v)
+		r.AddElem(v)
 	}
 	return
 }
 
 func (s set) Intersect(o set) (r set) {
-	r = EmptySet()
+	r = MakeEmptySet()
 	for v, _ := range s.data {
 		if o.Exist(v) {
-			r.addElem(v)
+			r.AddElem(v)
 		}
 	}
 
 	return
 }
+
 func (s set) Difference(o set) (r set) {
-	r = EmptySet()
+	r = MakeEmptySet()
 	for v, _ := range s.data {
 		if !o.Exist(v) {
-			r.addElem(v)
+			r.AddElem(v)
 		}
 	}
 	return

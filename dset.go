@@ -9,8 +9,6 @@ type Dset struct {
 	data []int
 }
 
-func MakeEmptyDSet()
-
 func MakeDSet(num int) (r Dset) {
 	r.data = make([]int, num)
 	return
