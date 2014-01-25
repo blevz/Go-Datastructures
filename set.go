@@ -2,13 +2,13 @@ package ds
 
 //Data structure to represent a mathematical Set
 type Set struct {
-	data map[string]bool
+	data map[interface{}]bool
 }
 
 //Public Fucntions
 
 func MakeEmptySet() (r Set) {
-	r.data = make(map[string]bool)
+	r.data = make(map[interface{}]bool)
 	return
 }
 
@@ -16,20 +16,20 @@ func (s Set) Size() int {
 	return len(s.data)
 }
 
-func (s *Set) AddElem(val string) {
+func (s *Set) AddElem(val interface{}) {
 	_, present := s.data[val]
 	if !present {
 		s.data[val] = true
 	}
 }
 
-func (s *Set) DelElem(val string) {
+func (s *Set) DelElem(val interface{}) {
 	if s.Exist(val) {
 		delete(s.data, val)
 	}
 }
 
-func (s Set) Exist(val string) bool {
+func (s Set) Exist(val interface{}) bool {
 	_, present := s.data[val]
 	return present
 }
