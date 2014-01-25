@@ -11,6 +11,9 @@ type Dset struct {
 
 func MakeDSet(num int) (r Dset) {
 	r.data = make([]int, num)
+	for x := 0; x < num; x++ {
+		r.data[x] = x
+	}
 	return
 }
 
