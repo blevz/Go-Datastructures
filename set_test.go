@@ -1,7 +1,7 @@
 package ds
 
 import (
-	"fmt"
+	_ "fmt"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
@@ -78,7 +78,6 @@ func TestSet(t *testing.T) {
 	})
 	Convey("test difference", t, func() {
 		es7 := es5.Difference(es4)
-		fmt.Println(es7.data)
 		So(es7.Size(), ShouldEqual, 2)
 	})
 

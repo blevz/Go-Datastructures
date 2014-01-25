@@ -12,40 +12,28 @@ import (
 //	   \ /
 //     e a
 
-func TestTrees(t *testing.T) {
+func TestTreeFreeTypedness(t *testing.T) {
+	a := MakeTree()
+	b := MakeTreeWithLeftSubTree(&a)
+	e := MakeTree()
+	d := MakeTreeWithRightSubTree(&e)
+	c := MakeTreeWithSubtrees(&d, &b)
+	a.val = "a"
+	b.val = "b"
+	c.val = "c"
+	d.val = "d"
+	e.val = "e"
+
 	Convey("Test Trees", t, func() {
-		a := MakeTree()
-		b := MakeTreeWithLeftSubTree(&a)
-		e := MakeTree()
-		d := MakeTreeWithRightSubTree(&e)
-		c := MakeTreeWithSubtrees(&d, &b)
-
-		a.val = 5
-		b.val = "hello"
-		c.val = "美国"
-		d.val = 2.5
-		e.val = false
-
-		c.prefixPrint()
+		//c.prefixPrint()
 		So(a.IsLeaf(), ShouldBeTrue)
 		So(b.IsLeaf(), ShouldBeFalse)
 
 	})
 
 	Convey("Test Prefix do", t, func() {
-		a := MakeTree()
-		b := MakeTreeWithLeftSubTree(&a)
-		e := MakeTree()
-		d := MakeTreeWithRightSubTree(&e)
-		c := MakeTreeWithSubtrees(&d, &b)
 
-		a.val = 5
-		b.val = "hello"
-		c.val = "美国"
-		d.val = 2.5
-		e.val = false
-
-		c.prefixDo(func(x interface{}) {
+		c.breadthFirstDo(func(x interface{}) {
 			fmt.Println(x)
 		})
 	})
@@ -61,7 +49,7 @@ func TestTrees(t *testing.T) {
 //           \   /
 //            l2 l3
 
-func TestTree2(t *testing.T) {
+func TestTreeHelperFunctions(t *testing.T) {
 	l1 := MakeTree()
 	l2 := MakeTree()
 	l3 := MakeTree()
@@ -75,7 +63,7 @@ func TestTree2(t *testing.T) {
 	t4 := MakeTreeWithRightSubTree(&t2)
 	t5 := MakeTreeWithSubtrees(&t3, &t4)
 
-	Convey("Test Trees", t, func() {
+	Convey("Test IsLeaf()", t, func() {
 
 		So(l1.IsLeaf(), ShouldBeTrue)
 		So(l2.IsLeaf(), ShouldBeTrue)
@@ -89,12 +77,11 @@ func TestTree2(t *testing.T) {
 		So(t5.IsLeaf(), ShouldBeFalse)
 	})
 
-	Convey("test depth", t, func() {
+	Convey("test Depth()", t, func() {
 		So(t5.Depth(), ShouldEqual, 5)
 		So(t4.Depth(), ShouldEqual, 4)
 		So(t3.Depth(), ShouldEqual, 4)
 		So(t2.Depth(), ShouldEqual, 3)
 		So(t1.Depth(), ShouldEqual, 3)
-
 	})
 }
