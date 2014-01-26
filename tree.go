@@ -115,20 +115,20 @@ func (t Tree) prefixDo(f func(interface{})) {
 
 func (t Tree) inOrderDo(f func(interface{})) {
 	if t.left != nil {
-		t.left.prefixDo(f)
+		t.left.inOrderDo(f)
 	}
 	f(t.val)
 	if t.right != nil {
-		t.right.prefixDo(f)
+		t.right.inOrderDo(f)
 	}
 }
 
 func (t Tree) postfixDo(f func(interface{})) {
 	if t.left != nil {
-		t.left.prefixDo(f)
+		t.left.postfixDo(f)
 	}
 	if t.right != nil {
-		t.right.prefixDo(f)
+		t.right.postfixDo(f)
 	}
 	f(t.val)
 }
