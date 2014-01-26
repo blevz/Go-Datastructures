@@ -7,7 +7,7 @@ import (
 )
 
 func Test_Queue(t *testing.T) {
-	Convey("Test Stacks", t, func() {
+	Convey("Test Queue", t, func() {
 		a := MakeQueue()
 		So(a.Size(), ShouldEqual, 0)
 
@@ -33,5 +33,18 @@ func Test_Queue(t *testing.T) {
 
 		a.Pop()
 		So(a.Size(), ShouldEqual, 0)
+
+		a.Push(5)
+		a.Push(4)
+		a.Push(3)
+		a.Push(2)
+		a.Push(1)
+		So(a.Front(), ShouldEqual, 5)
+		a.Pop()
+		a.Push(2)
+		a.Push(1)
+		So(a.Front(), ShouldEqual, 4)
+		a.Pop()
+		So(a.Front(), ShouldEqual, 3)
 	})
 }
