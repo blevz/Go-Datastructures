@@ -37,6 +37,10 @@ func TestTreeFreeTypedness(t *testing.T) {
 			fmt.Println(x)
 		})
 	})
+
+	Convey("test pretty print", t, func() {
+		c.PrettyPrint()
+	})
 }
 
 //             t5
@@ -84,4 +88,9 @@ func TestTreeHelperFunctions(t *testing.T) {
 		So(t2.Depth(), ShouldEqual, 3)
 		So(t1.Depth(), ShouldEqual, 3)
 	})
+
+	Convey("test pretty print", t, func() {
+		t5.PrettyPrint()
+	})
+
 }
