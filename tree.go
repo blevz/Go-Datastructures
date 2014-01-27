@@ -1,40 +1,46 @@
 package ds
 
 import (
+	"container/list"
 	"fmt"
 )
 
-type Tree struct {
-	left  *Tree
-	right *Tree
+type BTree struct {
+	left  *BTree
+	right *BTree
 	val   interface{}
 }
 
-//Tree making methods
+type Tree struct {
+	children list.List
+	val      interface{}
+}
 
-func MakeTree() (t Tree) {
+//BTree making methods
+
+func MakeBTree() (t BTree) {
 	return
 }
 
 //With val
 
-func MakeTreeWithVal(valtoset interface{}) (t Tree) {
+func MakeBTreeWithVal(valtoset interface{}) (t BTree) {
 	t.val = valtoset
 	return
 }
 
 //With Subtrees
 
-func MakeTreeWithLeftSubTree(lefty *Tree) (t Tree) {
+func MakeBTreeWithLeftSubBTree(lefty *BTree) (t BTree) {
 	t.left = lefty
 	return
 }
 
-func MakeTreeWithRightSubTree(righty *Tree) (t Tree) {
+func MakeBTreeWithRightSubBTree(righty *BTree) (t BTree) {
 	t.right = righty
 	return
 }
-func MakeTreeWithSubtrees(lefty *Tree, righty *Tree, val interface{}) (t Tree) {
+func MakeBTreeWithSubtrees(lefty *BTree, righty *BTree, val interface{}) (t BTree) {
 	t.right = righty
 	t.left = lefty
 	t.val = val
@@ -43,43 +49,43 @@ func MakeTreeWithSubtrees(lefty *Tree, righty *Tree, val interface{}) (t Tree) {
 
 //Make copy work
 
-func CopyTreesToSubtrees(lefty Tree, righty Tree) (t Tree) {
+func CopyBTreesToSubtrees(lefty BTree, righty BTree) (t BTree) {
 	return
 }
 
 // Deletes
 
-func (t *Tree) DeleteLeftSubtree() {
+func (t *BTree) DeleteLeftSubtree() {
 	t.left = nil
 }
 
-func (t *Tree) DeleteRightSubtree() {
+func (t *BTree) DeleteRightSubtree() {
 	t.right = nil
 }
 
-func (t *Tree) DeleteLeftChild() {
+func (t *BTree) DeleteLeftChild() {
 	// TO DO
 }
 
-func (t *Tree) DeleteRightChild() {
+func (t *BTree) DeleteRightChild() {
 	// TO DO
 }
 
 //Helper Functions
 
-func (t Tree) IsLeaf() bool {
+func (t BTree) IsLeaf() bool {
 	return (t.left == nil && t.right == nil)
 }
 
-func (t Tree) HasLeftChild() bool {
+func (t BTree) HasLeftChild() bool {
 	return t.left != nil
 }
 
-func (t Tree) HasRightChild() bool {
+func (t BTree) HasRightChild() bool {
 	return t.right != nil
 }
 
-func (t Tree) Depth() (d int64) {
+func (t BTree) Depth() (d int64) {
 	if t.IsLeaf() {
 		d = 1
 	} else {
@@ -104,7 +110,7 @@ func (t Tree) Depth() (d int64) {
 
 // Do's
 
-func (t Tree) prefixDo(f func(interface{})) {
+func (t BTree) prefixDo(f func(interface{})) {
 	f(t.val)
 	if t.left != nil {
 		t.left.prefixDo(f)
@@ -114,7 +120,7 @@ func (t Tree) prefixDo(f func(interface{})) {
 	}
 }
 
-func (t Tree) inOrderDo(f func(interface{})) {
+func (t BTree) inOrderDo(f func(interface{})) {
 	if t.left != nil {
 		t.left.inOrderDo(f)
 	}
@@ -124,7 +130,7 @@ func (t Tree) inOrderDo(f func(interface{})) {
 	}
 }
 
-func (t Tree) postfixDo(f func(interface{})) {
+func (t BTree) postfixDo(f func(interface{})) {
 	if t.left != nil {
 		t.left.postfixDo(f)
 	}
@@ -134,12 +140,12 @@ func (t Tree) postfixDo(f func(interface{})) {
 	f(t.val)
 }
 
-func (t Tree) breadthFirstDo(f func(interface{})) {
+func (t BTree) breadthFirstDo(f func(interface{})) {
 	q := MakeQueue()
 	q.Push(&t)
 
 	for !q.Empty() {
-		p := q.Front().(*Tree)
+		p := q.Front().(*BTree)
 		q.Pop()
 		f(p.val)
 
@@ -153,12 +159,12 @@ func (t Tree) breadthFirstDo(f func(interface{})) {
 	}
 }
 
-func (t Tree) depthFirstDo(f func(interface{})) {
+func (t BTree) depthFirstDo(f func(interface{})) {
 	s := MakeStack()
 	s.Push(&t)
 
 	for !s.Empty() {
-		p := s.Top().(*Tree)
+		p := s.Top().(*BTree)
 		s.Pop()
 		f(p.val)
 
@@ -174,35 +180,35 @@ func (t Tree) depthFirstDo(f func(interface{})) {
 
 //Prints
 
-func (t Tree) prefixPrint() {
+func (t BTree) prefixPrint() {
 	t.prefixDo(func(x interface{}) {
 		fmt.Println(x, " ")
 	})
 	fmt.Println("")
 }
 
-func (t Tree) postfixPrint() {
+func (t BTree) postfixPrint() {
 	t.postfixDo(func(x interface{}) {
 		fmt.Println(x, " ")
 	})
 	fmt.Println("")
 }
 
-func (t Tree) inOrderPrint() {
+func (t BTree) inOrderPrint() {
 	t.inOrderDo(func(x interface{}) {
 		fmt.Print(x, " ")
 	})
 	fmt.Println("")
 }
 
-func (t Tree) BFPrint() {
+func (t BTree) BFPrint() {
 	t.breadthFirstDo(func(x interface{}) {
 		fmt.Print(x, " ")
 	})
 	fmt.Println("")
 }
 
-func (t Tree) DFPrint() {
+func (t BTree) DFPrint() {
 	t.depthFirstDo(func(x interface{}) {
 		fmt.Print(x, " ")
 	})
@@ -212,14 +218,14 @@ func (t Tree) DFPrint() {
 //Pretty Printer
 //http://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
 
-func (t Tree) PrettyPrint() {
+func (t BTree) PrettyPrint() {
 	maxLevel := t.Depth()
-	nodes := make([]*Tree, 0)
+	nodes := make([]*BTree, 0)
 	nodes = append(nodes, &t)
 	t.prettyPrintHelper(nodes, 1, maxLevel+1)
 }
 
-func allNull(nodes []*Tree) bool {
+func allNull(nodes []*BTree) bool {
 	for _, n := range nodes {
 		if n != nil {
 			return false
@@ -234,7 +240,7 @@ func printWhiteSpace(num int64) {
 	}
 }
 
-func (t Tree) prettyPrintHelper(nodes []*Tree, level, maxLevel int64) {
+func (t BTree) prettyPrintHelper(nodes []*BTree, level, maxLevel int64) {
 	if len(nodes) == 0 || allNull(nodes) {
 		return
 	}
@@ -246,7 +252,7 @@ func (t Tree) prettyPrintHelper(nodes []*Tree, level, maxLevel int64) {
 
 	printWhiteSpace(firstSpaces)
 
-	newNodes := make([]*Tree, 0)
+	newNodes := make([]*BTree, 0)
 	for _, n := range nodes {
 		xtra := int64(0)
 		if n != nil {

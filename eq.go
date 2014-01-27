@@ -87,37 +87,37 @@ type BToken struct {
 //
 
 type Equation struct {
-	parseTree Tree
-	vnames    Set
-	vval      map[string]float64
+	parseBTree BTree
+	vnames     Set
+	vval       map[string]float64
 }
 
 func (e *Equation) init() {
-	e.parseTree = MakeTree()
+	e.parseBTree = MakeBTree()
 	e.vnames = MakeEmptySet()
 	e.vval = make(map[string]float64)
 }
 
 func MakeBasicEquation_Value(val float64) (e Equation) {
 	e.init()
-	e.parseTree = MakeTreeWithVal(val)
+	e.parseBTree = MakeBTreeWithVal(val)
 	return
 }
 
 func MakeBasicEquation_Variable(v string) (e Equation) {
 	e.init()
-	e.parseTree = MakeTreeWithVal(v)
+	e.parseBTree = MakeBTreeWithVal(v)
 	e.vnames = MakeEmptySet()
 	e.vnames.AddElem(v)
 	return
 }
 
 func (e Equation) Eval() float64 {
-	return e.evalHelper(&e.parseTree)
+	return e.evalHelper(&e.parseBTree)
 
 }
 
-func (e Equation) evalHelper(pt *Tree) float64 {
+func (e Equation) evalHelper(pt *BTree) float64 {
 	switch t := pt.val.(type) {
 	case int64:
 		return float64(t)
@@ -155,27 +155,27 @@ func (e1 *Equation) SetVal(v string, x float64) {
 
 func (e1 Equation) Add(e2 Equation) (er Equation) {
 	er.init()
-	er.parseTree = MakeTreeWithSubtrees(&e1.parseTree, &e2.parseTree, "+")
+	er.parseBTree = MakeBTreeWithSubtrees(&e1.parseBTree, &e2.parseBTree, "+")
 	er.vnames = e1.vnames.Union(e2.vnames)
 	return
 }
 
 func (e1 Equation) Sub(e2 Equation) (er Equation) {
 	er.init()
-	er.parseTree = MakeTreeWithSubtrees(&e1.parseTree, &e2.parseTree, "-")
+	er.parseBTree = MakeBTreeWithSubtrees(&e1.parseBTree, &e2.parseBTree, "-")
 	er.vnames = e1.vnames.Union(e2.vnames)
 	return
 }
 
 func (e1 Equation) Mul(e2 Equation) (er Equation) {
 	er.init()
-	er.parseTree = MakeTreeWithSubtrees(&e1.parseTree, &e2.parseTree, "*")
+	er.parseBTree = MakeBTreeWithSubtrees(&e1.parseBTree, &e2.parseBTree, "*")
 	er.vnames = e1.vnames.Union(e2.vnames)
 	return
 }
 
 func (e Equation) Print() {
-	e.parseTree.inOrderPrint()
+	e.parseBTree.inOrderPrint()
 }
 
 func ParseAndReturnEquation(str string) (eq Equation) {
@@ -205,7 +205,7 @@ func ParseAndReturnEquation(str string) (eq Equation) {
 		//Then add it to the output queue.
 		if IsValue(tok) {
 			//fmt.Printf("%s %q is Variable or value\n", tok, lit)
-			t := MakeTreeWithVal(lit)
+			t := MakeBTreeWithVal(lit)
 			outputQueue.Push(&(t))
 		} else if IsNumLiteral(tok) {
 			//fmt.Printf("%s %q is Number\n", tok, lit)
@@ -213,7 +213,7 @@ func ParseAndReturnEquation(str string) (eq Equation) {
 			if err != nil {
 				panic("oh no")
 			}
-			t := MakeTreeWithVal(v)
+			t := MakeBTreeWithVal(v)
 			outputQueue.Push(&(t))
 			//If the token is an operator, o1, then:
 		} else if isOperator(tok) {
@@ -278,30 +278,30 @@ func ParseAndReturnEquation(str string) (eq Equation) {
 	//Now we need to unroll the queue and make it into a full stack
 	for outputQueue.Size() != 0 {
 		//Pop variables and values onto the stack
-		curTree := outputQueue.Front().(*Tree)
+		curBTree := outputQueue.Front().(*BTree)
 
-		switch v := curTree.val.(type) {
+		switch v := curBTree.val.(type) {
 		case string:
 			if !strIsOperator(v) {
 				//Not a variable
 				eq.vnames.AddElem(v)
-				outputStack.Push(curTree)
+				outputStack.Push(curBTree)
 			} else {
-				curTree.right = outputStack.Top().(*Tree)
+				curBTree.right = outputStack.Top().(*BTree)
 				outputStack.Pop()
-				curTree.left = outputStack.Top().(*Tree)
+				curBTree.left = outputStack.Top().(*BTree)
 				outputStack.Pop()
-				outputStack.Push(curTree)
+				outputStack.Push(curBTree)
 			}
 		case float64:
-			outputStack.Push(curTree)
+			outputStack.Push(curBTree)
 		}
 		//When you hit an operator, pop two values off the stack
 		//The first value is the right hand side
 		if outputQueue.Size() != 1 {
 			outputQueue.Pop()
 		} else {
-			eq.parseTree = *curTree
+			eq.parseBTree = *curBTree
 			outputQueue.Pop()
 		}
 	}
@@ -309,6 +309,6 @@ func ParseAndReturnEquation(str string) (eq Equation) {
 }
 
 func popAndEnq(outputQueue *Queue, val string) {
-	toAdd := MakeTreeWithVal(val)
+	toAdd := MakeBTreeWithVal(val)
 	outputQueue.Push(&toAdd)
 }

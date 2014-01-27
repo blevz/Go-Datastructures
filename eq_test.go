@@ -59,11 +59,11 @@ func TestEquations(t *testing.T) {
 		Convey("Test Equation Parsing", t, func() {
 			e := ParseAndReturnEquation("z+(x*y)")
 			e.Print()
-			e.parseTree.PrettyPrint()
+			e.parseBTree.PrettyPrint()
 			fmt.Println("(x+x)/2")
-			ParseAndReturnEquation("(x+x)/2").parseTree.PrettyPrint()
+			ParseAndReturnEquation("(x+x)/2").parseBTree.PrettyPrint()
 			fmt.Println("x+x*2")
-			ParseAndReturnEquation("x+x*2").parseTree.PrettyPrint()
+			ParseAndReturnEquation("x+x*2").parseBTree.PrettyPrint()
 			fmt.Println("")
 			ParseAndReturnEquation("z+(x+3.5)")
 			fmt.Println("")
@@ -74,7 +74,7 @@ func TestEquations(t *testing.T) {
 			fmt.Println("1+2/3-4*5")
 			e2 := ParseAndReturnEquation("1+2/3-4*5")
 			e2.Print()
-			e2.parseTree.PrettyPrint()
+			e2.parseBTree.PrettyPrint()
 		})*/
 
 }

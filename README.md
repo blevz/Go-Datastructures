@@ -2,13 +2,14 @@ Data Structures:
 
 - set (Basic unordered set of things)
 - dset (disjount set/ union find set)
-- tdarray (two dimensional array)
-- stack (LIFO Top, pop, push)
-- queue (FIFO front, pop, push)
-
+- TDArray (two dimensional array)
+- Stack (LIFO Top, pop, push)
+- Queue (FIFO front, pop, push)
+- BTree (binary tree)
 
 In Progress
-- Tree (binary tree, potentially others)
+
+- Tree (Tree with no limit on number of children)
 - Equation (Represent mathematical equations in an AST)
 - Matrix
 - Graph representations
