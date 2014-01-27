@@ -17,7 +17,7 @@ func TestTreeFreeTypedness(t *testing.T) {
 	b := MakeTreeWithLeftSubTree(&a)
 	e := MakeTree()
 	d := MakeTreeWithRightSubTree(&e)
-	c := MakeTreeWithSubtrees(&d, &b)
+	c := MakeTreeWithSubtrees(&d, &b, "c")
 	a.val = "a"
 	b.val = "b"
 	c.val = "c"
@@ -61,11 +61,11 @@ func TestTreeHelperFunctions(t *testing.T) {
 	l5 := MakeTreeWithRightSubTree(&l2)
 
 	t6 := MakeTreeWithLeftSubTree(&l3)
-	t1 := MakeTreeWithSubtrees(&l1, &l5)
-	t2 := MakeTreeWithSubtrees(&t6, &l4)
+	t1 := MakeTreeWithSubtrees(&l1, &l5, "t1")
+	t2 := MakeTreeWithSubtrees(&t6, &l4, "t2")
 	t3 := MakeTreeWithLeftSubTree(&t1)
 	t4 := MakeTreeWithRightSubTree(&t2)
-	t5 := MakeTreeWithSubtrees(&t3, &t4)
+	t5 := MakeTreeWithSubtrees(&t3, &t4, "t5")
 
 	Convey("Test IsLeaf()", t, func() {
 

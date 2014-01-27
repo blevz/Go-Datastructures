@@ -34,9 +34,10 @@ func MakeTreeWithRightSubTree(righty *Tree) (t Tree) {
 	t.right = righty
 	return
 }
-func MakeTreeWithSubtrees(lefty *Tree, righty *Tree) (t Tree) {
+func MakeTreeWithSubtrees(lefty *Tree, righty *Tree, val interface{}) (t Tree) {
 	t.right = righty
 	t.left = lefty
+	t.val = val
 	return
 }
 
