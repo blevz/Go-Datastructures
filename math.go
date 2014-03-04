@@ -15,7 +15,7 @@ func PowInt(a, b int64) (r int64) {
 	if b == 0 {
 		r = 1
 	} else if b > 0 {
-		r = a
+		r = 1
 		for x := int64(0); x < b; x++ {
 			r *= a
 		}
