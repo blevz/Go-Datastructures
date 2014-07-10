@@ -1,7 +1,6 @@
 package ds
 
 import (
-	"fmt"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
