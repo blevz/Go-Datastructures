@@ -22,7 +22,7 @@ type Extended_Set_I interface {
 	Difference(Extended_Set_I) Extended_Set_I
 }
 
-type Union_Find_I interface {
+type Disjoint_Set_I interface {
 	Find(int) interface{}
 	Union(int, int)
 }
