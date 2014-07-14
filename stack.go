@@ -8,9 +8,10 @@ type Stack struct {
 	data []interface{}
 }
 
-func MakeStack() (s Stack) {
+func MakeStack() *Stack {
+	var s Stack
 	s.Init()
-	return
+	return &s
 }
 
 func (s *Stack) Init() {
@@ -18,6 +19,9 @@ func (s *Stack) Init() {
 }
 
 func (s Stack) Top() interface{} {
+	if s.Empty() {
+		return 0
+	}
 	return s.data[s.Size()-1]
 }
 
@@ -29,8 +33,13 @@ func (s Stack) Empty() bool {
 	return len(s.data) == 0
 }
 
-func (s *Stack) Pop() {
+func (s *Stack) Pop() interface{} {
+	if s.Empty() {
+		return 0
+	}
+	toReturn := s.data[s.Size()-1]
 	s.data = s.data[0 : s.Size()-1]
+	return toReturn
 }
 
 func (s *Stack) Push(x interface{}) {
