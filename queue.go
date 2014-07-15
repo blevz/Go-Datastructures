@@ -6,9 +6,10 @@ type Queue struct {
 	data []interface{}
 }
 
-func MakeQueue() (q Queue) {
+func MakeQueue() *Queue {
+	var q Queue
 	q.Init()
-	return
+	return &q
 }
 
 func (q Queue) Init() {
@@ -16,6 +17,9 @@ func (q Queue) Init() {
 }
 
 func (q Queue) Front() interface{} {
+	if q.Empty() {
+		return 0
+	}
 	return q.data[0]
 }
 
@@ -27,8 +31,13 @@ func (q Queue) Empty() bool {
 	return len(q.data) == 0
 }
 
-func (q *Queue) Pop() {
+func (q *Queue) Pop() interface{} {
+	if q.Empty() {
+		return 0
+	}
+	toReturn := q.data[0]
 	q.data = q.data[1:q.Size()]
+	return toReturn
 }
 
 func (q *Queue) Push(x interface{}) {
