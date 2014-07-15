@@ -99,8 +99,17 @@ func BenchmarkQueuePushAndPop(b *testing.B) {
 	a = MakeQueue()
 	for i := 0; i < b.N; i++ {
 		a.Push(i)
+	}
+	for i := 0; i < b.N/2; i++ {
 		a.Pop()
 	}
+	for i := 0; i < b.N/2; i++ {
+		a.Push(i)
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop()
+	}
+
 }
 
 func BenchmarkCircleQueuePushAndPop(b *testing.B) {
@@ -108,6 +117,14 @@ func BenchmarkCircleQueuePushAndPop(b *testing.B) {
 	a = MakeCircleQueue()
 	for i := 0; i < b.N; i++ {
 		a.Push(i)
+	}
+	for i := 0; i < b.N/2; i++ {
+		a.Pop()
+	}
+	for i := 0; i < b.N/2; i++ {
+		a.Push(i)
+	}
+	for i := 0; i < b.N; i++ {
 		a.Pop()
 	}
 }
