@@ -48,10 +48,32 @@ func Test_Stack(t *testing.T) {
 	})
 }
 
-func BenchmarkStack(b *testing.B) {
-	a := MakeStack()
+func BenchmarkStackPushAndPop(b *testing.B) {
+	var a Stack_I
+	a = MakeStack()
 	for i := 0; i < b.N; i++ {
 		a.Push(i)
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop()
+	}
+}
+func BenchmarkStackPush(b *testing.B) {
+	var a Stack_I
+	a = MakeStack()
+	for i := 0; i < b.N; i++ {
+		a.Push(i)
+	}
+}
+
+func BenchmarkStackPop(b *testing.B) {
+	var a Stack_I
+	a = MakeStack()
+	for i := 0; i < b.N; i++ {
+		a.Push(i)
+	}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
 		a.Pop()
 	}
 }
