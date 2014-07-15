@@ -40,10 +40,7 @@ func (d Deque) Back() interface{} {
 func (d *Deque) Push_Front(toAdd interface{}) {
 	newElem := make([]interface{}, 0)
 	newElem = append(newElem, toAdd)
-	for x := 0; x < len(d.data); x++ {
-		newElem = append(newElem, d.data[x])
-	}
-	d.data = newElem
+	d.data = append(newElem, d.data...)
 }
 
 func (d *Deque) Push_Back(toAdd interface{}) {

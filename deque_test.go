@@ -39,3 +39,51 @@ func Test_Reg_Deque(t *testing.T) {
 	})
 
 }
+
+func BenchmarkDequePushFrontPopFront(b *testing.B) {
+	var a Deque_I
+	a = MakeDeque()
+	for i := 0; i < b.N; i++ {
+		a.Push_Front(i)
+
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop_Front()
+	}
+}
+
+func BenchmarkDequePushBackPopFront(b *testing.B) {
+	var a Deque_I
+	a = MakeDeque()
+	for i := 0; i < b.N; i++ {
+		a.Push_Back(i)
+
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop_Front()
+	}
+}
+
+func BenchmarkDequePushFrontPopBack(b *testing.B) {
+	var a Deque_I
+	a = MakeDeque()
+	for i := 0; i < b.N; i++ {
+		a.Push_Front(i)
+
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop_Back()
+	}
+}
+
+func BenchmarkDequePushBackPopBack(b *testing.B) {
+	var a Deque_I
+	a = MakeDeque()
+	for i := 0; i < b.N; i++ {
+		a.Push_Back(i)
+
+	}
+	for i := 0; i < b.N; i++ {
+		a.Pop_Back()
+	}
+}
