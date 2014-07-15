@@ -41,6 +41,7 @@ type Deque_I interface {
 	Push_Back(interface{})
 	Pop_Front() interface{}
 	Pop_Back() interface{}
+	Print()
 }
 
 type Queue_I interface {
