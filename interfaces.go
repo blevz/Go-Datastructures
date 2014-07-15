@@ -23,8 +23,9 @@ type Extended_Set_I interface {
 }
 
 type Disjoint_Set_I interface {
-	Find(int) interface{}
+	Find(int) int
 	Union(int, int)
+	Print()
 }
 
 type Priority_Queue_I interface {
