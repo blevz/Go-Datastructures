@@ -7,7 +7,8 @@ import (
 )
 
 func TestSet(t *testing.T) {
-	es := MakeEmptySet()
+	var es Set_I
+	es = MakeEmptySet()
 
 	Convey("Empty set should have Size zero and no nil pointers", t, func() {
 		So(es, ShouldNotBeNil)
