@@ -12,22 +12,17 @@ import (
 //     e a
 
 func TestBTreeFreeTypedness(t *testing.T) {
-	a := MakeBTree()
-	b := MakeBTreeWithLeftSubBTree(&a)
-	e := MakeBTree()
-	d := MakeBTreeWithRightSubBTree(&e)
-	c := MakeBTreeWithSubtrees(&d, &b, "c")
-	a.val = "a"
-	b.val = "b"
-	c.val = "c"
-	d.val = "d"
-	e.val = "e"
+	a := MakeBinaryTree("a")
+	b := MakeBinaryTreeWithLeftSubtree("b", a)
+	e := MakeBinaryTree("e")
+	d := MakeBinaryTreeWithRightSubtree("d", e)
+	c := MakeBinaryTreeWithSubtrees("c", d, b)
 
 	Convey("Test BTrees", t, func() {
 		//c.prefixPrint()
 		So(a.IsLeaf(), ShouldBeTrue)
 		So(b.IsLeaf(), ShouldBeFalse)
-
+		So(c.IsLeaf(), ShouldBeFalse)
 	})
 
 }
@@ -43,18 +38,18 @@ func TestBTreeFreeTypedness(t *testing.T) {
 //            l2 l3
 
 func TestBTreeHelperFunctions(t *testing.T) {
-	l1 := MakeBTree()
-	l2 := MakeBTree()
-	l3 := MakeBTree()
-	l4 := MakeBTree()
-	l5 := MakeBTreeWithRightSubBTree(&l2)
+	l1 := MakeBinaryTree(1)
+	l2 := MakeBinaryTree(2)
+	l3 := MakeBinaryTree(3)
+	l4 := MakeBinaryTree(4)
+	l5 := MakeBinaryTreeWithRightSubtree(5, l2)
 
-	t6 := MakeBTreeWithLeftSubBTree(&l3)
-	t1 := MakeBTreeWithSubtrees(&l1, &l5, "t1")
-	t2 := MakeBTreeWithSubtrees(&t6, &l4, "t2")
-	t3 := MakeBTreeWithLeftSubBTree(&t1)
-	t4 := MakeBTreeWithRightSubBTree(&t2)
-	t5 := MakeBTreeWithSubtrees(&t3, &t4, "t5")
+	t6 := MakeBinaryTreeWithLeftSubtree(6, l3)
+	t1 := MakeBinaryTreeWithSubtrees("t1", l1, l5)
+	t2 := MakeBinaryTreeWithSubtrees("t2", t6, l4)
+	t3 := MakeBinaryTreeWithLeftSubtree("t3", t1)
+	t4 := MakeBinaryTreeWithRightSubtree("t4", t2)
+	t5 := MakeBinaryTreeWithSubtrees("t5", t3, t4)
 
 	Convey("Test IsLeaf()", t, func() {
 

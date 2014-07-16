@@ -1,185 +1,39 @@
 package ds
 
 import (
-	"container/list"
-	"fmt"
+	_ "fmt"
 )
 
-type BTree struct {
-	left  *BTree
-	right *BTree
-	val   interface{}
-}
-
 type Tree struct {
-	children list.List
+	children []*Tree
 	val      interface{}
 }
 
-//BTree making methods
-
-func MakeBTree() (t BTree) {
-	return
+func MakeTree(valToAdd interface{}) *Tree {
+	var t Tree
+	t.val = valToAdd
+	t.children = make([]*Tree, 0)
+	return &t
 }
 
-//With val
-
-func MakeBTreeWithVal(valtoset interface{}) (t BTree) {
-	t.val = valtoset
-	return
+func (t Tree) IsLeaf() bool {
+	return len(t.children) == 0
 }
 
-//With Subtrees
-
-func MakeBTreeWithLeftSubBTree(lefty *BTree) (t BTree) {
-	t.left = lefty
-	return
+func (t *Tree) AddChild(child *Tree) {
+	t.children = append(t.children, child)
 }
 
-func MakeBTreeWithRightSubBTree(righty *BTree) (t BTree) {
-	t.right = righty
-	return
-}
-func MakeBTreeWithSubtrees(lefty *BTree, righty *BTree, val interface{}) (t BTree) {
-	t.right = righty
-	t.left = lefty
-	t.val = val
-	return
+func (t *Tree) AddChildWithValue(valToAdd interface{}) {
+	child := MakeTree(valToAdd)
+	t.AddChild(child)
 }
 
-//Make copy work
-
-func CopyBTreesToSubtrees(lefty BTree, righty BTree) (t BTree) {
-	return
+func (t *Tree) GetChildren() []*Tree {
+	return t.children
 }
 
-// Deletes
-
-func (t *BTree) DeleteLeftSubtree() {
-	t.left = nil
-}
-
-func (t *BTree) DeleteRightSubtree() {
-	t.right = nil
-}
-
-func (t *BTree) DeleteLeftChild() {
-	// TO DO
-}
-
-func (t *BTree) DeleteRightChild() {
-	// TO DO
-}
-
-//Helper Functions
-
-func (t BTree) IsLeaf() bool {
-	return (t.left == nil && t.right == nil)
-}
-
-func (t BTree) HasLeftChild() bool {
-	return t.left != nil
-}
-
-func (t BTree) HasRightChild() bool {
-	return t.right != nil
-}
-
-func (t BTree) Depth() (d int64) {
-	if t.IsLeaf() {
-		d = 1
-	} else {
-		if t.left == nil {
-			d = t.right.Depth() + 1
-		} else if t.right == nil {
-			d = t.left.Depth() + 1
-		} else {
-			ld := t.left.Depth() + 1
-			rd := t.right.Depth() + 1
-
-			if ld > rd {
-				d = ld
-			} else {
-				d = rd
-			}
-		}
-	}
-
-	return
-}
-
-// Do's
-
-func (t BTree) prefixDo(f func(interface{})) {
-	f(t.val)
-	if t.left != nil {
-		t.left.prefixDo(f)
-	}
-	if t.right != nil {
-		t.right.prefixDo(f)
-	}
-}
-
-func (t BTree) inOrderDo(f func(interface{})) {
-	if t.left != nil {
-		t.left.inOrderDo(f)
-	}
-	f(t.val)
-	if t.right != nil {
-		t.right.inOrderDo(f)
-	}
-}
-
-func (t BTree) postfixDo(f func(interface{})) {
-	if t.left != nil {
-		t.left.postfixDo(f)
-	}
-	if t.right != nil {
-		t.right.postfixDo(f)
-	}
-	f(t.val)
-}
-
-func (t BTree) breadthFirstDo(f func(interface{})) {
-	q := MakeQueue()
-	q.Push(&t)
-
-	for !q.Empty() {
-		p := q.Front().(*BTree)
-		q.Pop()
-		f(p.val)
-
-		//Enque Child nodes
-		if p.HasLeftChild() {
-			q.Push(p.left)
-		}
-		if p.HasRightChild() {
-			q.Push(p.right)
-		}
-	}
-}
-
-func (t BTree) depthFirstDo(f func(interface{})) {
-	s := MakeStack()
-	s.Push(&t)
-
-	for !s.Empty() {
-		p := s.Top().(*BTree)
-		s.Pop()
-		f(p.val)
-
-		//Enque Child nodes
-		if p.HasLeftChild() {
-			s.Push(p.left)
-		}
-		if p.HasRightChild() {
-			s.Push(p.right)
-		}
-	}
-}
-
-//Prints
-
+/*
 func (t BTree) prefixPrint() {
 	t.prefixDo(func(x interface{}) {
 		fmt.Println(x, " ")
@@ -294,4 +148,4 @@ func (t BTree) prettyPrintHelper(nodes []*BTree, level, maxLevel int64) {
 	}
 	t.prettyPrintHelper(newNodes, level+1, maxLevel)
 
-}
+}*/

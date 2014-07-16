@@ -70,9 +70,15 @@ type Two_Dimensional_Array_I interface {
 
 type Tree_I interface {
 	IsLeaf() bool
+	AddChild(Tree_I)
+	AddChildWithValue(interface{})
+	GetChildren() []Tree_I
 }
 
 type Binary_Tree_I interface {
-	IsLeaf() bool
-	Depth() int
+	GetLeftSubtree() Binary_Tree_I
+	GetRightSubtree() Binary_Tree_I
+}
+
+type Graph_I interface {
 }
